@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload Photo</title>
+</head>
+
+<body>
+<header>
+    <h1>Wgraj zdjęcie</h1>
+</header>
+
+<section class="upload_photo">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="message">
+                <h3>{{ message|safe }}</h3>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Add">
+    </form>
+
+</section>
+
+</body>
+
+</html>

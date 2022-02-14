@@ -15,7 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from photo_app.views import PhotoUpload
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('upload_photo/', PhotoUpload.as_view(), name='photo-upload'),
 ]

@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Upload Photo</title>
+    <link rel="stylesheet" href="/static/css/style.css">
 </head>
 
 <body>
 <header>
-    <h1>Wgraj zdjęcie</h1>
+    <h1>Add a photo</h1>
 </header>
 
 <section class="upload_photo">
@@ -19,11 +20,13 @@
         {% endfor %}
     {% endif %}
 
-    <form action="" method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Add">
-    </form>
+    <div class="form">
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Add">
+        </form>
+    </div>
 
 </section>
 

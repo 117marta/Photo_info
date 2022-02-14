@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ img.description }}</title>
+</head>
+<body>
+
+Opened: {{ img_opened }}<br>
+Img: {{ img }}<br>
+<br>
+{{ img.photo }}<br>
+<!--Zdj: <img src="{{ MEDIA_URL }}{{ img.photo }}">-->
+<!--Zdj: <img src="/photo/media/{{ img.photo }}">-->
+Zdj: <img src="{{ img.photo.url }}">
+<!--Zdj: <img src="/photo/media/img/cylinder.png/">-->
+
+</body>
+</html>

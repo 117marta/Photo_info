@@ -2,10 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{{ img.description }}</title>
+    <title>Photo info</title>
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
+{% load custom_tags %}
 
 <header>
     <h1>Photo information</h1>
@@ -25,22 +26,26 @@
 <section class="info_text">
     <div class="photo_coordinates">
         <strong>Geographic data:<br></strong>
-        Altitude: {% widthratio alt.0 alt.1 1 %} m<br>
-        Geographical (DMS) coordinates:<br>
-        {{ lat.0.0 }}&deg; {{ lat.1.0 }}&#8242; {% widthratio lat.2.0 lat.2.1 1 %}&#8243; {{ lat_ref }}<br>
-        {{ lon.0.0 }}&deg; {{ lon.1.0 }}&#8242; {% widthratio lon.2.0 lon.2.1 1 %}&#8243; {{ lon_ref }}<br>
-        Decimal (DD) coordinates:<br>
-        {{ lat_decimal|floatformat:6 }} {{ lat_ref }}<br>
-        {{ lon_decimal|floatformat:6 }} {{ lon_ref }}<br>
+        <ul>
+            <li>Altitude: {% division_decimal alt.0 alt.1 2 %} m</li>
+            <li>Geographical (DMS) coordinates:</li>
+            {{ lat.0.0 }}&deg; {{ lat.1.0 }}&#8242; {% widthratio lat.2.0 lat.2.1 1 %}&#8243; {{ lat_ref }}<br>
+            {{ lon.0.0 }}&deg; {{ lon.1.0 }}&#8242; {% widthratio lon.2.0 lon.2.1 1 %}&#8243; {{ lon_ref }}<br>
+            <li>Decimal (DD) coordinates:</li>
+            {{ lat_decimal|floatformat:6 }} {{ lat_ref }}<br>
+            {{ lon_decimal|floatformat:6 }} {{ lon_ref }}<br>
+        </ul>
     </div>
     <br>
     <div class="photo_other_info">
         <strong>Other info:<br></strong>
-        Height: {{ height }} px<br>
-        Width: {{ width }} px<br>
-        Date taken: {{ date }}<br>
-        Camera: {{ camera }}<br>
-        Model: {{ model }}<br>
+        <ul>
+            <li>Height: {{ height }} px</li>
+            <li>Width: {{ width }} px</li>
+            <li>Date taken: {{ date }}</li>
+            <li>Camera: {{ camera }}</li>
+            <li>Model: {{ model }}</li>
+        </ul>
     </div>
 </section>
 

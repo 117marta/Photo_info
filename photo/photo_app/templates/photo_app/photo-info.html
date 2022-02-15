@@ -14,25 +14,33 @@
 <br>
 <!--Zdj: <img src="{{ MEDIA_URL }}{{ img.photo }}">-->
 <!--Zdj: <img src="/photo/media/{{ img.photo }}">-->
-Zdj: <img src="{{ img.photo.url }}" alt="Photo" height="500px">
 <!--Zdj: <img src="/photo/media/img/cylinder.png/">-->
 
+
+<img src="{{ img.photo.url }}" alt="Photo" height="500px">
 <br><br>
 
-Geographical (DMS) coordinates:<br>
-{{ lat.0.0 }}&deg; {{ lat.1.0 }}&#8242; {% widthratio lat.2.0 lat.2.1 1 %}&#8243; {{ lat_ref }}<br>
-{{ lon.0.0 }}&deg; {{ lon.1.0 }}&#8242; {% widthratio lon.2.0 lon.2.1 1 %}&#8243; {{ lon_ref }}<br>
-Decimal (DD) coordinates:<br>
-<br>
-ALT: {% widthratio alt.0 alt.1 1 %} m<br>
-H: {{ height }} px<br>
-W: {{ width }} px<br>
-DATE TAKEN: {{ date }}<br>
-CAMERA: {{ camera }}<br>
-MODEL: {{ model }}<br>
-<br>
-KOMENTARZ JAKIŚ
-
+<section>
+    <div class="photo_coordinates">
+        <strong>Geographic data:<br></strong>
+        Altitude: {% widthratio alt.0 alt.1 1 %} m<br>
+        Geographical (DMS) coordinates:<br>
+        {{ lat.0.0 }}&deg; {{ lat.1.0 }}&#8242; {% widthratio lat.2.0 lat.2.1 1 %}&#8243; {{ lat_ref }}<br>
+        {{ lon.0.0 }}&deg; {{ lon.1.0 }}&#8242; {% widthratio lon.2.0 lon.2.1 1 %}&#8243; {{ lon_ref }}<br>
+        Decimal (DD) coordinates:<br>
+        {{ lat_decimal|floatformat:6 }} {{ lat_ref }}<br>
+        {{ lon_decimal|floatformat:6 }} {{ lon_ref }}<br>
+    </div>
+    <br>
+    <div class="photo_other_info">
+        <strong>Other info:<br></strong>
+        Height: {{ height }} px<br>
+        Width: {{ width }} px<br>
+        Date taken: {{ date }}<br>
+        Camera: {{ camera }}<br>
+        Model: {{ model }}<br>
+    </div>
+</section>
 
 </body>
 </html>

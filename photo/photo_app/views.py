@@ -29,6 +29,8 @@ class PhotoInfoView(View):
         if img.photo:
             img_opened = Image.open(img.photo.path)
             try:
+                # Returns exif data as a dictionary with the following keys unless its value does not exist in the file:
+                # “0th”, “Exif”, “GPS”, “Interop”, “1st”, and “thumbnail”.
                 exif_dict = piexif.load(img_opened.info['exif'])
                 lat = exif_dict['GPS'][piexif.GPSIFD.GPSLatitude]
                 lat_ref = exif_dict['GPS'][piexif.GPSIFD.GPSLatitudeRef].decode('UTF-8')
@@ -43,6 +45,19 @@ class PhotoInfoView(View):
             except KeyError:
                 return HttpResponse('No exif data in photo.')
 
+            # Convert DMS (Degrees/Minutes/Seconds) to DD (Decimal Degrees)
+            def get_decimal_degrees(value, ref):
+                degress = value[0][0]
+                minutes = value[1][0] / 60
+                seconds = value[2][0] / value[2][1] / 3600
+                result = degress + minutes + seconds
+                if ref == 'S' or ref == 'W':
+                    result = -result
+                return result
+
+            lat_decimal = get_decimal_degrees(lat, lat_ref)
+            lon_decimal = get_decimal_degrees(lon, lon_ref)
+
             ctx = {
                 'img_opened': img_opened,
                 'img': img,
@@ -56,6 +71,8 @@ class PhotoInfoView(View):
                 'date': date,
                 'camera': camera,
                 'model': model,
+                'lat_decimal': lat_decimal,
+                'lon_decimal': lon_decimal,
             }
             return render(request=request, template_name='photo_app/photo-info.html', context=ctx)
         else:

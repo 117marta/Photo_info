@@ -3,8 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>{{ img.description }}</title>
+    <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
+
+<header>
+    <h1>Photo information</h1>
+</header>
 
 Opened: {{ img_opened }}<br>
 Img: {{ img }}<br>
@@ -12,8 +17,22 @@ Img: {{ img }}<br>
 {{ img.photo }}<br>
 <!--Zdj: <img src="{{ MEDIA_URL }}{{ img.photo }}">-->
 <!--Zdj: <img src="/photo/media/{{ img.photo }}">-->
-Zdj: <img src="{{ img.photo.url }}">
+Zdj: <img src="{{ img.photo.url }}" alt="Photo" height="500px">
 <!--Zdj: <img src="/photo/media/img/cylinder.png/">-->
+
+<br><br>
+
+LAT: {{ lat }} {{ lat_ref }}<br>
+LON: {{ lon }} {{ lon_ref }}<br>
+ALT: {{ alt }}<br>
+H: {{ height }} px<br>
+W: {{ width }} px<br>
+DATE TAKEN: {{ date }}<br>
+CAMERA: {{ camera }}<br>
+MODEL: {{ model }}<br>
+<br>
+KOMENTARZ JAKIŚ
+
 
 </body>
 </html>

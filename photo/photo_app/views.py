@@ -1,4 +1,3 @@
-import folium as folium
 from django.shortcuts import render, HttpResponse
 from .models import PhotoModel
 from django.views import View
@@ -15,9 +14,7 @@ class PhotoUploadView(SuccessMessageMixin, CreateView):
     model = PhotoModel
     fields = ['photo', 'description']
     template_name = 'photo_app/photo-upload.html'
-    success_url = '/upload_photo/'
-    success_message = 'Picture added successfully!'
-    error_message = 'Wystąpił błąd. Spróbuj ponownie.'
+    error_message = 'Error occurred. Try again.'
 
     def get_success_url(self):
         return f'/upload_photo/{self.object.pk}'
@@ -49,10 +46,10 @@ class PhotoInfoView(View):
 
             # Convert DMS (Degrees/Minutes/Seconds) to DD (Decimal Degrees)
             def get_decimal_degrees(value, ref):
-                degress = value[0][0]
+                degrees = value[0][0]
                 minutes = value[1][0] / 60
                 seconds = value[2][0] / value[2][1] / 3600
-                result = degress + minutes + seconds
+                result = degrees + minutes + seconds
                 if ref == 'S' or ref == 'W':
                     result = -result
                 return result
@@ -69,7 +66,7 @@ class PhotoInfoView(View):
                 width=w,
                 height=h,
                 zoom_start=12,
-                tiles='OpenStreetMap'
+                tiles='OpenStreetMap',
             )
             folium.Marker(
                 location=[lat_decimal, lon_decimal],
@@ -79,6 +76,18 @@ class PhotoInfoView(View):
             ).add_to(m)
             figure.add_child(m)
             m = m._repr_html_()
+
+            # Save to database
+            img.latitude = lat_decimal
+            img.longitude = lon_decimal
+            img.altitude = alt[0] / alt[1]
+            img.date_taken = date
+            img.width = width
+            img.height = height
+            img.camera_name = camera
+            img.camera_model = model
+            img.name = f'{img.pk}. {date}'
+            img.save()
 
             ctx = {
                 'img': img,
@@ -99,4 +108,3 @@ class PhotoInfoView(View):
             return render(request=request, template_name='photo_app/photo-info.html', context=ctx)
         else:
             return HttpResponse('No photo added!')
-

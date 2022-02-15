@@ -21,3 +21,16 @@ header {
 /*  display: flex;*/
 /*  justify-content: center;*/
 /*}*/
+
+.info_graphical {
+  display: flex;
+  justify-content: space-around;
+  margin: 20px;
+  /*border: solid black;*/
+}
+
+.info_text {
+  display: flex;
+  margin: 20px;
+  gap: 50px;
+}

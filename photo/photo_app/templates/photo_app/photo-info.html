@@ -11,16 +11,18 @@
     <h1>Photo information</h1>
 </header>
 
-<br>
-<!--Zdj: <img src="{{ MEDIA_URL }}{{ img.photo }}">-->
-<!--Zdj: <img src="/photo/media/{{ img.photo }}">-->
-<!--Zdj: <img src="/photo/media/img/cylinder.png/">-->
+<section class="info_graphical">
+    <div class="photo_img">
+        <strong>Photo<br></strong>
+        <img src="{{ img.photo.url }}" alt="Photo" height="500px">
+    </div>
+    <div class="photo_map">
+        <strong>Where the photo was taken<br></strong>
+        {{ m|safe }}<br>
+    </div>
+</section>
 
-
-<img src="{{ img.photo.url }}" alt="Photo" height="500px">
-<br><br>
-
-<section>
+<section class="info_text">
     <div class="photo_coordinates">
         <strong>Geographic data:<br></strong>
         Altitude: {% widthratio alt.0 alt.1 1 %} m<br>

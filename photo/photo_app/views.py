@@ -6,6 +6,8 @@ from django.views.generic.edit import CreateView
 from django.contrib.messages.views import SuccessMessageMixin
 from PIL import Image
 import piexif
+import folium
+from branca.element import Figure
 
 
 class PhotoUploadView(SuccessMessageMixin, CreateView):
@@ -58,8 +60,27 @@ class PhotoInfoView(View):
             lat_decimal = get_decimal_degrees(lat, lat_ref)
             lon_decimal = get_decimal_degrees(lon, lon_ref)
 
+            # Map
+            w = 800
+            h = 500
+            figure = Figure(width=w, height=h)
+            m = folium.Map(
+                location=(lat_decimal, lon_decimal),
+                width=w,
+                height=h,
+                zoom_start=12,
+                tiles='OpenStreetMap'
+            )
+            folium.Marker(
+                location=[lat_decimal, lon_decimal],
+                tooltip='Here!',
+                popup=':)',
+                icon=folium.Icon(color='red', icon_color='yellow', angle=15, prefix='fa fa-camera'),  # Font Awesome 4
+            ).add_to(m)
+            figure.add_child(m)
+            m = m._repr_html_()
+
             ctx = {
-                'img_opened': img_opened,
                 'img': img,
                 'lat': lat,
                 'lat_ref': lat_ref,
@@ -73,6 +94,7 @@ class PhotoInfoView(View):
                 'model': model,
                 'lat_decimal': lat_decimal,
                 'lon_decimal': lon_decimal,
+                'm': m,
             }
             return render(request=request, template_name='photo_app/photo-info.html', context=ctx)
         else:

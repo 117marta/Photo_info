@@ -11,10 +11,7 @@
     <h1>Photo information</h1>
 </header>
 
-Opened: {{ img_opened }}<br>
-Img: {{ img }}<br>
 <br>
-{{ img.photo }}<br>
 <!--Zdj: <img src="{{ MEDIA_URL }}{{ img.photo }}">-->
 <!--Zdj: <img src="/photo/media/{{ img.photo }}">-->
 Zdj: <img src="{{ img.photo.url }}" alt="Photo" height="500px">
@@ -22,9 +19,12 @@ Zdj: <img src="{{ img.photo.url }}" alt="Photo" height="500px">
 
 <br><br>
 
-LAT: {{ lat }} {{ lat_ref }}<br>
-LON: {{ lon }} {{ lon_ref }}<br>
-ALT: {{ alt }}<br>
+Geographical (DMS) coordinates:<br>
+{{ lat.0.0 }}&deg; {{ lat.1.0 }}&#8242; {% widthratio lat.2.0 lat.2.1 1 %}&#8243; {{ lat_ref }}<br>
+{{ lon.0.0 }}&deg; {{ lon.1.0 }}&#8242; {% widthratio lon.2.0 lon.2.1 1 %}&#8243; {{ lon_ref }}<br>
+Decimal (DD) coordinates:<br>
+<br>
+ALT: {% widthratio alt.0 alt.1 1 %} m<br>
 H: {{ height }} px<br>
 W: {{ width }} px<br>
 DATE TAKEN: {{ date }}<br>

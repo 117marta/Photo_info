@@ -31,15 +31,15 @@ class PhotoInfoView(View):
             try:
                 exif_dict = piexif.load(img_opened.info['exif'])
                 lat = exif_dict['GPS'][piexif.GPSIFD.GPSLatitude]
-                lat_ref = exif_dict['GPS'][piexif.GPSIFD.GPSLatitudeRef]
+                lat_ref = exif_dict['GPS'][piexif.GPSIFD.GPSLatitudeRef].decode('UTF-8')
                 lon = exif_dict['GPS'][piexif.GPSIFD.GPSLongitude]
-                lon_ref = exif_dict['GPS'][piexif.GPSIFD.GPSLongitudeRef]
+                lon_ref = exif_dict['GPS'][piexif.GPSIFD.GPSLongitudeRef].decode('UTF-8')
                 alt = exif_dict['GPS'][piexif.GPSIFD.GPSAltitude]
                 height = exif_dict["0th"][257]
                 width = exif_dict["0th"][256]
-                date = exif_dict['0th'][piexif.ImageIFD.DateTime]
-                camera = exif_dict["0th"][271]
-                model = exif_dict["0th"][272]
+                date = exif_dict['0th'][piexif.ImageIFD.DateTime].decode('UTF-8')
+                camera = exif_dict["0th"][271].decode('UTF-8')
+                model = exif_dict["0th"][272].decode('UTF-8')
             except KeyError:
                 return HttpResponse('No exif data in photo.')
 

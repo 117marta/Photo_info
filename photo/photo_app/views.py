@@ -7,6 +7,7 @@ from PIL import Image
 import piexif
 import folium
 from branca.element import Figure
+from geopy.distance import geodesic
 
 
 class PhotoUploadView(SuccessMessageMixin, CreateView):
@@ -114,6 +115,10 @@ class PhotoInfoView(View):
             else:
                 m_user = 'Geolocation could not be obtained. Refresh the page.'
 
+            # Calculation the distance between user geolocation and the photo
+            dist = geodesic((lat_decimal, lon_decimal), (lat_user, lon_user)).km
+            dist = round(dist, 1)
+
             ctx = {
                 'img': img,
                 'lat': lat,
@@ -132,6 +137,7 @@ class PhotoInfoView(View):
                 'lat_user': lat_user,
                 'lon_user': lon_user,
                 'm_user': m_user,
+                'dist': dist,
             }
             return render(request=request, template_name='photo_app/photo-info.html', context=ctx)
         else:

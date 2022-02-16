@@ -57,7 +57,7 @@ class PhotoInfoView(View):
             lat_decimal = get_decimal_degrees(lat, lat_ref)
             lon_decimal = get_decimal_degrees(lon, lon_ref)
 
-            # Map
+            # Map - photo taken
             w = 800
             h = 500
             figure = Figure(width=w, height=h)
@@ -65,19 +65,19 @@ class PhotoInfoView(View):
                 location=(lat_decimal, lon_decimal),
                 width=w,
                 height=h,
-                zoom_start=12,
+                zoom_start=14,
                 tiles='OpenStreetMap',
             )
             folium.Marker(
                 location=[lat_decimal, lon_decimal],
-                tooltip='Here!',
-                popup=':)',
+                tooltip='Photo',
+                popup=f'{img.description}',
                 icon=folium.Icon(color='red', icon_color='yellow', angle=15, prefix='fa fa-camera'),  # Font Awesome 4
             ).add_to(m)
             figure.add_child(m)
             m = m._repr_html_()
 
-            # Save to database
+            # Save exif data to the database
             img.latitude = lat_decimal
             img.longitude = lon_decimal
             img.altitude = alt[0] / alt[1]
@@ -88,6 +88,31 @@ class PhotoInfoView(View):
             img.camera_model = model
             img.name = f'{img.pk}. {date}'
             img.save()
+
+            # Get geolocation of user
+            lat_user = request.COOKIES.get('lat')
+            lon_user = request.COOKIES.get('lon')
+
+            # Map - user geolocation
+            if lat_user != None and lon_user != None:
+                figure_user = Figure(width=w, height=h)
+                m_user = folium.Map(
+                    location=(lat_user, lon_user),
+                    width=w,
+                    height=h,
+                    zoom_start=14,
+                    tiles='OpenStreetMap',
+                )
+                folium.Marker(
+                    location=[lat_user, lon_user],
+                    tooltip='You',
+                    popup=':)',
+                    icon=folium.Icon(color='black', icon_color='pink', angle=0, prefix='fa fa-map-marker'),
+                ).add_to(m_user)
+                figure_user.add_child(m_user)
+                m_user = m_user._repr_html_()
+            else:
+                m_user = 'Geolocation could not be obtained. Refresh the page.'
 
             ctx = {
                 'img': img,
@@ -104,6 +129,9 @@ class PhotoInfoView(View):
                 'lat_decimal': lat_decimal,
                 'lon_decimal': lon_decimal,
                 'm': m,
+                'lat_user': lat_user,
+                'lon_user': lon_user,
+                'm_user': m_user,
             }
             return render(request=request, template_name='photo_app/photo-info.html', context=ctx)
         else:

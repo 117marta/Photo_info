@@ -34,3 +34,7 @@ header {
   filter: contrast(150%);
   transition: 0.5s;
 }
+
+#user_geolocation_map {
+  margin-left: 50px;
+}

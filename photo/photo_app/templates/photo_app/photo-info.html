@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load static %}
 <head>
     <meta charset="UTF-8">
     <title>Photo info</title>
@@ -49,5 +50,19 @@
     </div>
 </section>
 
+<div id="user_geolocation">
+    <div id="user_geolocation_txt">
+        {{ lat_user }}
+        {{ lon_user }}<br>
+        <input id="show_user_geolocation" type="checkbox">
+        <label for="show_user_geolocation">Show my geolocation</label>
+    </div>
+    <div id="user_geolocation_map">
+        <strong>You are here<br></strong>
+        {{ m_user|safe }}
+    </div>
+</div>
+
 </body>
+<script src="{% static 'js/app.js' %}"></script>
 </html>

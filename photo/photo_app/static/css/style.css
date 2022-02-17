@@ -1,3 +1,4 @@
+/*Upload_photo page*/
 body {
   font-size: 20px;
   font-family: sans-serif;
@@ -10,13 +11,18 @@ body {
 header {
   /*background-color: rgba(0, 200, 0, 0.5);*/
   background: linear-gradient(120deg, rgba(0, 200, 0, 0.6) 30%, rgba(0, 0, 0, 0.5) 80%);
-  padding: 20px;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .upload_photo {
   margin-left: 10px;
 }
 
+
+/*Photo_info page*/
 .info_graphical, .photo_user_distance {
   display: flex;
   justify-content: space-around;
@@ -35,10 +41,64 @@ header {
   transition: 0.5s;
 }
 
+.btn {
+  background-color: green;
+  /*background: linear-gradient(160deg, rgba(100, 0, 200, 1)30%, rgba(255, 0, 0, 1), rgba(255, 100, 100, 1));*/
+  color: whitesmoke;
+  font-size: 20px;
+  padding: 5px;
+  border: black solid 1px;
+  transition: 0.5s ease-in-out;
+}
+
+.btn:hover {
+  box-shadow: 5px 5px rgba(0, 0, 0, 1), 10px 10px rgba(0, 0, 0, 0.6), 15px 15px rgba(0, 0, 0, 0.2), 20px 20px rgba(0, 0, 0, 0.05);
+}
+
+
+/*Geolocation page*/
 #user_geolocation_txt {
   border: solid black 1px;
   padding: 10px;
   border-radius: 20px;
   box-shadow: black 5px 5px 5px;
   background-color: rgba(255, 255, 100, 0.4);
+}
+
+.header_btn {
+  background-color: black;
+  color: yellow;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 5px;
+  border-radius: 5px;
+  border: none;
+}
+
+.header_btn a {
+  text-decoration: none;
+  color: yellow;
+}
+
+.header_btn:hover {
+  background-color: yellow;
+  color: black;
+  box-shadow: rgba(0, 255, 0) 0px 0px 25px;
+}
+
+.date_today {
+  text-align: center;
+  background-color: rgba(150, 0, 200, 0.5);
+  color: white;
+  padding: 10px;
+  transition: 1s ease-in-out;
+  border: solid black 1px;
+}
+
+.date_today:hover {
+  background-color: yellow;
+  box-shadow: 0px 0px 10px black;
+  transform: rotateY(20deg);
+  color: rgba(0, 0, 0, 0.5);
+  /*text-shadow: 1px 0px 1px #CCC, 0px 1px 1px #EEE, 2px 1px 1px #CCC, 1px 2px 1px #EEE;*/
 }

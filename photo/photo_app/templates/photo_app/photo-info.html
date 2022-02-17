@@ -10,7 +10,21 @@
 {% load custom_tags %}
 
 <header>
-    <h1>Photo information</h1>
+    <div class="header_info">
+        <h1>Photo information</h1>
+    </div>
+
+    <div class="date_today">
+        Hello!<br>
+        {% load tz %}
+            {% timezone 'Europe/Warsaw' %}
+            Today is: {% now 'd-m-Y, H:i' %}
+        {% endtimezone %}
+    </div>
+
+    <div class="header_buttons">
+        <a href="{% url 'photo-upload' %}"><button type="button" class="header_btn">Upload a photo</button></a>
+    </div>
 </header>
 
 <section class="info_graphical">
@@ -50,8 +64,8 @@
     </div>
     <br>
     <div class="get_geolocation">
-        Click below to obtain your geolocation and to calculate the distance between you and the photo<br>
-        <a href="{% url 'geo' photo_id=img.pk %}">CLICK</a>
+        Click below to obtain your geolocation and to calculate the distance between you and the photo.<br>
+        <a href="{% url 'geo' photo_id=img.pk %}"><button type="button" class="btn">Get geolocation</button></a>
     </div>
 </section>
 

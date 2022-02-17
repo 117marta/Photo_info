@@ -11,10 +11,24 @@
 
 
 <header>
-    <h1>Geolocation</h1>
+    <div class="header_info">
+        <h1>Geolocation</h1>
+    </div>
+
+    <div class="date_today">
+        Hello!<br>
+        {% load tz %}
+            {% timezone 'Europe/Warsaw' %}
+            Today is: {% now 'd-m-Y, H:i' %}
+        {% endtimezone %}
+    </div>
+
+    <div class="header_buttons">
+        <a href="/upload_photo/"><button type="button" class="header_btn">Upload a photo</button></a>
+        <a href="/upload_photo/{{ img.pk }}/"><button type="button" class="header_btn">Photo info</button></a>
+    </div>
 </header>
 
-<a href="/upload_photo/{{ img.pk }}">Go back</a>
 
 <section class="photo_user_distance">
 
@@ -25,7 +39,7 @@
 
     <div class="user_geolocation">
         <input id="show_user_geolocation" type="checkbox">
-        <label for="show_user_geolocation">Show your exact position</label>
+        <label for="show_user_geolocation">Show your exact position on a map</label>
         <div id="user_geolocation_txt">
 <!--            TYP lat_user: {{ lat_user|get_type }}<br>-->
             {% if lat_user and lon_user %}

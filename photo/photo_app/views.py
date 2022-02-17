@@ -8,6 +8,7 @@ import piexif
 import folium
 from branca.element import Figure
 from geopy.distance import geodesic
+from .utils import get_centered_coordinates, get_zoom
 
 
 class PhotoUploadView(SuccessMessageMixin, CreateView):
@@ -124,6 +125,10 @@ class UserGeolocation(View):
         lon_user = request.COOKIES.get('lon')
         point_user = (lat_user, lon_user)
 
+        # Calculation the distance between user geolocation and the photo
+        dist = geodesic(point_photo, point_user).km
+        dist = round(dist, 1)
+
         # Map - user geolocation
         h = 450
         w = 500
@@ -151,10 +156,10 @@ class UserGeolocation(View):
         if lat_user != None and lon_user != None:
             figure_dist = Figure(width=w, height=h)
             m_dist = folium.Map(
-                location=point_photo,
+                location=get_centered_coordinates(lat_photo, lon_photo, lat_user, lon_user),
                 width=w,
                 height=h,
-                zoom_start=14,
+                zoom_start=get_zoom(dist),
                 tiles='OpenStreetMap',
             )
             folium.Marker(
@@ -182,10 +187,6 @@ class UserGeolocation(View):
         else:
             m_user = 'Geolocation could not be obtained. Refresh the page.'
             m_dist = 'Geolocation could not be obtained. Refresh the page.'
-
-        # Calculation the distance between user geolocation and the photo
-        dist = geodesic(point_photo, point_user).km
-        dist = round(dist, 1)
 
         ctx = {
             'img': img,

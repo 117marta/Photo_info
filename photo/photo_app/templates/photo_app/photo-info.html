@@ -48,26 +48,13 @@
             <li>Model: {{ model }}</li>
         </ul>
     </div>
+    <br>
+    <div class="get_geolocation">
+        Click below to obtain your geolocation and to calculate the distance between you and the photo<br>
+        <a href="{% url 'geo' photo_id=img.pk %}">CLICK</a>
+    </div>
 </section>
 
-<div id="user_geolocation">
-    <div id="user_geolocation_txt">
-        {% if lat_user and lon_user %}
-            Decimal (DD) coordinates of you:
-            {{ lat_user|floatformat:6 }},
-            {{ lon_user|floatformat:6 }}<br>
-        {% endif %}
-<!--        TYP: {{ lat_user|get_type }}<br>-->
-        The distance between you and the photo is: <i>{{ dist }} km.</i><br>
-        <input id="show_user_geolocation" type="checkbox">
-        <label for="show_user_geolocation">Show my geolocation</label>
-    </div>
-    <div id="user_geolocation_map">
-        <strong>You are here<br></strong>
-        {{ m_user|safe }}
-    </div>
-</div>
 
 </body>
-<script src="{% static 'js/app.js' %}"></script>
 </html>

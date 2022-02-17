@@ -17,13 +17,14 @@ from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from photo_app.views import PhotoUploadView, PhotoInfoView
+from photo_app.views import PhotoUploadView, PhotoInfoView, UserGeolocation
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('upload_photo/', PhotoUploadView.as_view(), name='photo-upload'),
     path('upload_photo/<int:photo_id>/', PhotoInfoView.as_view()),
+    path('geolocation/<int:photo_id>/', UserGeolocation.as_view(), name='geo'),
 ]
 
 if settings.DEBUG:

@@ -17,7 +17,7 @@ header {
   margin-left: 10px;
 }
 
-.info_graphical {
+.info_graphical, .photo_user_distance {
   display: flex;
   justify-content: space-around;
   margin: 20px;
@@ -35,6 +35,10 @@ header {
   transition: 0.5s;
 }
 
-#user_geolocation_map {
-  margin-left: 50px;
+#user_geolocation_txt {
+  border: solid black 1px;
+  padding: 10px;
+  border-radius: 20px;
+  box-shadow: black 5px 5px 5px;
+  background-color: rgba(255, 255, 100, 0.4);
 }

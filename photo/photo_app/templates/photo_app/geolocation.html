@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>Photo info</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+{% load custom_tags %}
+
+
+<header>
+    <h1>Geolocation</h1>
+</header>
+
+<a href="/upload_photo/{{ img.pk }}">Go back</a>
+
+<section class="photo_user_distance">
+
+    <div class="photo_user_map">
+        <strong>The distance between you and the photo<br></strong>
+        {{ m_dist|safe }}<br>
+    </div>
+
+    <div class="user_geolocation">
+        <input id="show_user_geolocation" type="checkbox">
+        <label for="show_user_geolocation">Show your exact position</label>
+        <div id="user_geolocation_txt">
+<!--            TYP lat_user: {{ lat_user|get_type }}<br>-->
+            {% if lat_user and lon_user %}
+            <ul>
+                <li>Coordinates of you:
+                {{ lat_user|floatformat:6 }},
+                {{ lon_user|floatformat:6 }}</li><br>
+                <li>Coordinates of the photo:
+                {{ lat_photo|floatformat:6 }},
+                {{ lon_photo|floatformat:6 }}</li><br>
+                <li>The distance between you and the photo is: <i>{{ dist }} km</i></li>
+            {% endif %}
+            </ul>
+        </div>
+        <br>
+        <div id="user_geolocation_map">
+            <strong>Your geolocation<br></strong>
+            {{ m_user|safe }}
+        </div>
+    </div>
+</section>
+
+
+</body>
+
+<script src="{% static 'js/app.js' %}"></script>
+</html>

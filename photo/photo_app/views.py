@@ -66,7 +66,7 @@ class PhotoInfoView(View):
                 location=(lat_decimal, lon_decimal),
                 width=w,
                 height=h,
-                zoom_start=14,
+                zoom_start=15,
                 tiles='OpenStreetMap',
             )
             folium.Marker(
@@ -90,35 +90,6 @@ class PhotoInfoView(View):
             img.name = f'{img.pk}. {date}'
             img.save()
 
-            # Get geolocation of user
-            lat_user = request.COOKIES.get('lat')
-            lon_user = request.COOKIES.get('lon')
-
-            # Map - user geolocation
-            if lat_user != None and lon_user != None:
-                figure_user = Figure(width=w, height=h)
-                m_user = folium.Map(
-                    location=(lat_user, lon_user),
-                    width=w,
-                    height=h,
-                    zoom_start=14,
-                    tiles='OpenStreetMap',
-                )
-                folium.Marker(
-                    location=[lat_user, lon_user],
-                    tooltip='You',
-                    popup=':)',
-                    icon=folium.Icon(color='black', icon_color='pink', angle=0, prefix='fa fa-map-marker'),
-                ).add_to(m_user)
-                figure_user.add_child(m_user)
-                m_user = m_user._repr_html_()
-            else:
-                m_user = 'Geolocation could not be obtained. Refresh the page.'
-
-            # Calculation the distance between user geolocation and the photo
-            dist = geodesic((lat_decimal, lon_decimal), (lat_user, lon_user)).km
-            dist = round(dist, 1)
-
             ctx = {
                 'img': img,
                 'lat': lat,
@@ -134,11 +105,97 @@ class PhotoInfoView(View):
                 'lat_decimal': lat_decimal,
                 'lon_decimal': lon_decimal,
                 'm': m,
-                'lat_user': lat_user,
-                'lon_user': lon_user,
-                'm_user': m_user,
-                'dist': dist,
             }
             return render(request=request, template_name='photo_app/photo-info.html', context=ctx)
         else:
             return HttpResponse('No photo added!')
+
+
+class UserGeolocation(View):
+
+    def get(self, request, photo_id):
+        img = PhotoModel.objects.get(pk=photo_id)
+        lat_photo = img.latitude
+        lon_photo = img.longitude
+        point_photo = (lat_photo, lon_photo)
+
+        # Get geolocation of user
+        lat_user = request.COOKIES.get('lat')
+        lon_user = request.COOKIES.get('lon')
+        point_user = (lat_user, lon_user)
+
+        # Map - user geolocation
+        h = 450
+        w = 500
+        if lat_user != None and lon_user != None:
+            figure_user = Figure(width=w, height=h)
+            m_user = folium.Map(
+                location=point_user,
+                width=w,
+                height=h,
+                zoom_start=17,  # min_zoom=0, max_zoom=18
+                tiles='OpenStreetMap',
+            )
+            folium.Marker(
+                location=point_user,
+                tooltip='You',
+                popup=':)',
+                icon=folium.Icon(color='black', icon_color='pink', angle=0, prefix='fa fa-map-marker'),
+            ).add_to(m_user)
+            figure_user.add_child(m_user)
+            m_user = m_user._repr_html_()
+
+        # Map - distance with line
+        h = 700
+        w = 900
+        if lat_user != None and lon_user != None:
+            figure_dist = Figure(width=w, height=h)
+            m_dist = folium.Map(
+                location=point_photo,
+                width=w,
+                height=h,
+                zoom_start=14,
+                tiles='OpenStreetMap',
+            )
+            folium.Marker(
+                location=point_user,
+                tooltip='You',
+                popup=':)',
+                icon=folium.Icon(color='green', icon_color='blue', angle=0, prefix='fa fa-location-arrow'),
+            ).add_to(m_dist)
+            folium.Marker(
+                location=point_photo,
+                tooltip='Photo',
+                popup=f'{img.description}',
+                icon=folium.Icon(color='blue', icon_color='green', angle=5, prefix='fa fa-map-pin'),
+            ).add_to(m_dist)
+
+            # Add a line
+            line = folium.PolyLine(
+                locations=[point_photo, point_user],
+                weight=5,
+                color='cadetblue'
+            )
+            m_dist.add_child(line)
+            figure_dist.add_child(m_dist)
+            m_dist = m_dist._repr_html_()
+        else:
+            m_user = 'Geolocation could not be obtained. Refresh the page.'
+            m_dist = 'Geolocation could not be obtained. Refresh the page.'
+
+        # Calculation the distance between user geolocation and the photo
+        dist = geodesic(point_photo, point_user).km
+        dist = round(dist, 1)
+
+        ctx = {
+            'img': img,
+            'lat_photo': lat_photo,
+            'lon_photo': lon_photo,
+            'lat_user': lat_user,
+            'lon_user': lon_user,
+            'm_user': m_user,
+            'm_dist': m_dist,
+            'dist': dist,
+        }
+
+        return render(request=request, template_name='photo_app/geolocation.html', context=ctx)

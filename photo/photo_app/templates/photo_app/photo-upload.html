@@ -8,27 +8,39 @@
 
 <body>
 <header>
-    <h1>Add a photo</h1>
+    <h1>Add a photo to get its EXIF Data</h1>
 </header>
 
-<section class="upload_photo">
-    {% if messages %}
-        {% for message in messages %}
-            <div class="message">
-                <h3>{{ message|safe }}</h3>
-            </div>
-        {% endfor %}
-    {% endif %}
 
-    <div class="form">
-        <form method="post" enctype='multipart/form-data'>
-            {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" value="Add">
-        </form>
+<div class="upload_photo">
+    <section class="upload_photo_form">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="message">
+                    <h3>{{ message|safe }}</h3>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <div class="form">
+            <form method="post" enctype='multipart/form-data'>
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Add" class="upload_photo_btn">
+            </form>
+        </div>
+    </section>
+
+    <div class="gallery">
+        <h4 class="gallery_title">Recently added photos</h4>
+        <div class="gallery_content">
+            {% for p in photos %}
+            <a href="{{ p.photo.url }}"><img src="{{ p.photo.url }}" alt="Photo"></a><br>
+            {% endfor %}
+        </div>
     </div>
+</div>
 
-</section>
 
 </body>
 

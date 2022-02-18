@@ -9,7 +9,6 @@ body {
 }
 
 header {
-  /*background-color: rgba(0, 200, 0, 0.5);*/
   background: linear-gradient(120deg, rgba(0, 200, 0, 0.6) 30%, rgba(0, 0, 0, 0.5) 80%);
   padding: 15px;
   display: flex;
@@ -18,7 +17,54 @@ header {
 }
 
 .upload_photo {
-  margin-left: 10px;
+  display: flex;
+  gap: 450px;
+  margin-top: 50px;
+}
+
+.upload_photo_form {
+  margin-left: 30px;
+  border: solid black 1px;
+  box-shadow: 0px 0px 10px black;
+  border-radius: 20px;
+  max-height: 300px;
+  padding: 20px;
+  background: linear-gradient(-200deg, rgba(100, 0, 200, 0.5), rgba(255, 0, 0, 0.5), rgba(255, 255, 0, 0.5));
+}
+
+.gallery {
+  border: solid black 1px;
+  max-height: 720px;
+  width: 450px;
+  overflow-y: auto;
+  background: linear-gradient(200deg, rgba(100, 0, 200, 0.5), rgba(255, 0, 0, 0.5), rgba(255, 255, 0, 0.5));
+  box-shadow: 0px 0px 10px black;
+  text-align: center;
+}
+
+.gallery_content {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  gap: 20px;
+  align-items: center;
+}
+
+.gallery_content img {
+  margin: 5px;
+  object-fit: scale-down;
+  max-height: 250px;
+}
+
+.upload_photo_btn {
+  font-weight: bold;
+  padding: 5px;
+  border: 1px solid green;
+  background: -moz-linear-gradient(top, rgba(220, 220, 220), rgba(160, 160, 160));
+}
+
+.upload_photo_btn:hover {
+  background: rgba(160, 160, 160);
 }
 
 
@@ -27,7 +73,6 @@ header {
   display: flex;
   justify-content: space-around;
   margin: 20px;
-  /*border: solid black;*/
 }
 
 .info_text {
@@ -43,7 +88,6 @@ header {
 
 .btn {
   background-color: green;
-  /*background: linear-gradient(160deg, rgba(100, 0, 200, 1)30%, rgba(255, 0, 0, 1), rgba(255, 100, 100, 1));*/
   color: whitesmoke;
   font-size: 20px;
   padding: 5px;

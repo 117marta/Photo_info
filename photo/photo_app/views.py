@@ -20,6 +20,12 @@ class PhotoUploadView(SuccessMessageMixin, CreateView):
 
     def get_success_url(self):
         return f'/upload_photo/{self.object.pk}'
+    
+    def get_context_data(self, **kwargs):
+        context = super(PhotoUploadView, self).get_context_data(**kwargs)
+        # 5 lastest objects (only those with image path)
+        context['photos'] = list(PhotoModel.objects.exclude(photo__iexact='').order_by('-pk'))[:5]
+        return context
 
 
 class PhotoInfoView(View):
@@ -79,7 +85,7 @@ class PhotoInfoView(View):
             figure.add_child(m)
             m = m._repr_html_()
 
-            # Save exif data to the database
+            # Save Exif Data to the database
             img.latitude = lat_decimal
             img.longitude = lon_decimal
             img.altitude = alt[0] / alt[1]
@@ -120,12 +126,12 @@ class UserGeolocation(View):
         lon_photo = img.longitude
         point_photo = (lat_photo, lon_photo)
 
-        # Get geolocation of user
+        # Get a geolocation of a user
         lat_user = request.COOKIES.get('lat')
         lon_user = request.COOKIES.get('lon')
         point_user = (lat_user, lon_user)
 
-        # Calculation the distance between user geolocation and the photo
+        # Calculation the distance between the user's geolocation and the photo
         dist = geodesic(point_photo, point_user).km
         dist = round(dist, 1)
 
@@ -150,7 +156,7 @@ class UserGeolocation(View):
             figure_user.add_child(m_user)
             m_user = m_user._repr_html_()
 
-        # Map - distance with line
+        # Map - distance with a graphical representation of a line
         h = 700
         w = 900
         if lat_user != None and lon_user != None:

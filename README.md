@@ -1,5 +1,5 @@
 # Photo info App
-App where you can extract the EXIF Data from the photo.
+App where you can extract the EXIF Data from a photo.
 
 
 ## Table of Contents
@@ -15,7 +15,7 @@ App where you can extract the EXIF Data from the photo.
 ## General info
 This project was made to experiment with the EXIF Data from the photo. It is a standard that specifies information
 related to an image (or other media used by digital cameras). <br>
-The main aim was to get Coordinates from the photo and display in on a map. The next step was to get a geolocation
+The main aim was to get the Coordinates from the photo and display in on a map. The next step was to get a geolocation
 of a user and show it on the map.
 
 
@@ -31,19 +31,24 @@ Project was created with:
 
 
 ## Features
-* Main page where you can upload a photo
+* Main page where you can upload a photo and show five recently added photos
 * Get EXIF Data from the photo - geographical coordinates, altitude, photo size, date taken, camera name and its model
 * Geographical coordinates (DMS) converter to decimal coordinates (DD)
-* Show photo location on a map
+* Show the photo's location on the map
 * Get user geolocation
-* Calculate the distance between position of a user and the photo taken. The distance is shown on a map
+* Calculate the distance between the position of a user and the photo taken. The distance is shown on a map
 
 
 ## Screenshots
-(I will add  them later)
 
-### Main page:
-![Strona główna](calc/static/screenshots/1.png)
+### Upload_photo page:
+![Upload a photo](photo/photo_app/static/screenshots/1.png)
+
+### Photo_info page:
+![Get the information about the photo](photo/photo_app/static/screenshots/2.png)
+
+### Geolocation page:
+![Get the geolocation of the photo](photo/photo_app/static/screenshots/3.png)
 
 
 ## Setup
@@ -59,8 +64,12 @@ To get started:
 to install its dependencies
 * When the dependencies are installed, make migrations `python manage.py migrate` and run server 
 `python manage.py runserver` to start application
-* You will be able to access it at `127.0.0.1:8000`
+* You will be able to access it at `127.0.0.1:8000/upload_photo`
 
 
 ## Project Status
-Project is _in progress_.
+Project is _complete_.
+
+
+## Contact
+Created by 117marta - feel free to contact me!
